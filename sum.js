@@ -1,4 +1,5 @@
-function sum(a, b) {
+const sum = function(a, b) {
   return a + b;
-}
-module.exports = sum;
+};
+
+module.exports = { sum };

@@ -10,7 +10,7 @@
     "seed": "nodemon database/seed/seed.js",
     "scss-dev": "node-sass --watch --include-path (folder Path) --source-map (map to Folder) --output-style compressed _web-src/scss/main.scss web-dist/css/main.min.css",
     "scss": "node-sass scss -o css",
-    "jest": "jest"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -24,10 +24,12 @@
   },
   "homepage": "https://github.com/ttran835/movie_details#readme",
   "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "babel": "^6.23.0",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-env": "^2.4.1",
-    "babel-jest": "^24.0.0",
+    "babel-jest": "^23.6.0",
     "babel-loader": "^7.1.5",
     "babel-plugin-react-css-modules": "^5.0.0",
     "babel-preset-env": "^1.7.0",
@@ -59,6 +61,7 @@
   },
   "dependencies": {
     "@material-ui/core": "^3.9.2",
+    "axios": "^0.18.0",
     "body-parser": "^1.18.3",
     "cors": "^2.8.5",
     "dotenv": "^6.2.0",
