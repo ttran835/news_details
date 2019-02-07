@@ -8,8 +8,8 @@
     "react-dev": "webpack -w",
     "start": "nodemon server/server.js",
     "seed": "nodemon database/seed/seed.js",
-    "scss-dev": "node-sass --watch --include-path (folder Path) --source-map (map to Folder) --output-style compressed _web-src/scss/main.scss web-dist/css/main.min.css",
-    "scss": "node-sass scss -o css",
+    "scss-dev": "node-sass --watch client/src/styles/scss -o client/src/styles/css",
+    "scss": "node-sass client/src/styles/scss -o client/src/styles/css",
     "test": "jest"
   },
   "repository": {
@@ -61,6 +61,7 @@
   },
   "dependencies": {
     "@material-ui/core": "^3.9.2",
+    "@material-ui/icons": "^3.0.2",
     "axios": "^0.18.0",
     "body-parser": "^1.18.3",
     "cors": "^2.8.5",
@@ -69,6 +70,7 @@
     "json-parser": "^1.1.5",
     "morgan": "^1.9.1",
     "pg": "^7.8.0",
+    "react-router-dom": "^4.3.1",
     "sequelize": "^4.42.0"
   }
 }
