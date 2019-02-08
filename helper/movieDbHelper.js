@@ -5,7 +5,7 @@ const getMovies = title => {
   try {
     return Axios.get(
       `https://private-070548-simkl.apiary-mock.com/search/type?q=john%20wick&client_id=${
-        process.env.SIMKL_API
+        process.env.SIMKL_CLIENT_API
       }`
     );
   } catch (error) {

@@ -27,33 +27,64 @@ module.exports = {
       {
         test: /\.css$/,
         use: [
-          { loader: 'style-loader' },
           {
             loader: 'css-loader',
             options: {
               modules: true,
               localIdentName: '[path]__[name]__[local]--[hash:base64]',
+              sourceMap: true,
+              minimize: true,
             },
           },
-        ],
-      },
-      {
-        test: /\.scss$/,
-        use: [
           {
-            loader: 'postcss-loader', // Run postcss actions
+            loader: 'postcss-loader',
             options: {
-              plugins: function() {
-                // postcss plugins, can be exported to postcss.config.js
-                return [require('autoprefixer')];
-              },
+              sourceMap: true,
+              plugins: () => [
+                require('autoprefixer')({
+                  browsers: ['> 1%', 'last 2 versions'],
+                }),
+              ],
             },
           },
           {
-            loader: 'sass-loader', // compiles Sass to CSS
+            loader: 'sass-loader',
+            options: {
+              sourceMap: true,
+            },
           },
         ],
       },
+      // {
+      //   test: /\.scss$/,
+      //   exclude: /node_modules/,
+      //   use: [
+      //     {
+      //       loader: 'style-loader',
+      //     },
+      //     {
+      //       loader: 'css-loader',
+      //       options: {
+      //         sourceMap: true,
+      //       },
+      //     },
+      //     {
+      //       loader: 'resolve-url-loader',
+      //     },
+      //     {
+      //       loader: 'postcss-loader',
+      //       options: {
+      //         sourceMap: true,
+      //       },
+      //     },
+      //     {
+      //       loader: 'sass-loader',
+      //       options: {
+      //         sourceMap: true,
+      //       },
+      //     },
+      //   ],
+      // },
       {
         test: /\.json$/,
         loader: 'json-loader',

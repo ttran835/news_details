@@ -4,7 +4,7 @@
   "description": "Mocked Movie Page",
   "main": "index.js",
   "scripts": {
-    "webpack": "webpack -p",
+    "webpack": "webpack",
     "react-dev": "webpack -w",
     "start": "nodemon server/server.js",
     "seed": "nodemon database/seed/seed.js",
@@ -25,6 +25,7 @@
   "homepage": "https://github.com/ttran835/movie_details#readme",
   "devDependencies": {
     "@babel/core": "^7.2.2",
+    "autoprefixer": "^9.4.7",
     "babel": "^6.23.0",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
