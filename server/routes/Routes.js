@@ -1,9 +1,9 @@
 const Routes = require('express').Router();
-const { MoviesController } = require('../controller/MoviesController');
+const { NewsController } = require('../controller/NewsController');
 const { TvController } = require('../controller/TvController');
 
 Routes.route('/all')
-  .get(MoviesController.get)
-  .post(MoviesController.post);
+  .get(NewsController.get)
+  .post(NewsController.post);
 
 module.exports = Routes;
