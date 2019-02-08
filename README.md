@@ -1,6 +1,5 @@
-# movie_details
+# News Grabber
 
 ## Details about Repo
 
-The primary goal of this project is to mocked a moviesite with listings similar to Simlk.com and themoviedb.org.\
-More details will be posted once decisions is made about Tech Stack as well as which API to use for the site. 
+The Primary goal for this project is to generate a website that pulls news article from all sources and generate it onto a well design front-end for ease of navigation.

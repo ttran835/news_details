@@ -2,11 +2,11 @@ require('dotenv').config();
 const Axios = require('axios');
 const express = require('express');
 
-const url = `https://api.simkl.com/search/id?simkl=67144&client_id=${
-  process.env.SIMKL_API
+const url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=${
+  process.env.NEWS_API
 }`;
 
-const MoviesController = {
+const NewsController = {
   get: (req, res) => {
     Axios.get(url)
       .then(response => {
@@ -25,4 +25,4 @@ const MoviesController = {
   },
 };
 
-module.exports = { MoviesController };
+module.exports = { NewsController };
