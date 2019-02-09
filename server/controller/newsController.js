@@ -2,7 +2,9 @@ require('dotenv').config();
 const Axios = require('axios');
 const express = require('express');
 
-const url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=${
+const { news } = require('../../database/models/news');
+
+const url = `https://newsapi.org/v2/everything?q=u.s.&apiKey=${
   process.env.NEWS_API
 }`;
 

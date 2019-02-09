@@ -8,7 +8,7 @@
     "react-dev": "webpack -w",
     "start": "nodemon server/server.js",
     "seed": "nodemon database/seed/seed.js",
-    "scss-dev": "node-sass --watch client/src/styles/scss -o client/src/styles/css",
+    "scss-dev": "node-sass --watch client/src/styles/scss -o client/dist/styles/css",
     "scss": "node-sass client/src/styles/scss -o client/src/styles/css",
     "test": "jest"
   },
