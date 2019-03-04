@@ -13,8 +13,28 @@ const NewsController = {
     Axios.get(url)
       .then(response => {
         if (response) {
-          console.log(response.data);
-          res.status(200).send(response.data);
+          let articles = response.data.articles;
+          articles
+            .map(article => {
+              news.create({
+                source: [
+                  ['id', article.source.id],
+                  ['name', article.source.name],
+                ],
+                author: article.author,
+                title: article.title,
+                description: article.description,
+                url: article.url,
+                urlToImage: article.urlToImage,
+                publishedAt: article.publishedAt,
+                content: article.content,
+              });
+            })
+            .then(response => {
+              res
+                .status(200)
+                .send('Successfully saved information into database');
+            });
         }
       })
       .catch(err => {

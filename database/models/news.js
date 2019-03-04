@@ -8,11 +8,11 @@ const news = db.define(
     source: { type: Sequelize.ARRAY(Sequelize.TEXT) },
     author: { type: Sequelize.STRING },
     title: { type: Sequelize.STRING },
-    description: { type: Sequelize.STRING },
+    description: { type: Sequelize.STRING(1234) },
     url: { type: Sequelize.STRING },
     urlToImage: { type: Sequelize.STRING },
     publishedAt: { type: Sequelize.STRING },
-    content: { type: Sequelize.STRING },
+    content: { type: Sequelize.STRING(1234) },
   },
   {
     timeStamp: true,

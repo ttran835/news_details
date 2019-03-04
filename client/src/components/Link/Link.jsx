@@ -20,10 +20,12 @@ export default class Link extends React.Component {
 
   _onMouseEnter() {
     this.setState({ class: STATUS.HOVERED });
+    console.log('Enter');
   }
 
   _onMouseLeave() {
     this.setState({ class: STATUS.NORMAL });
+    console.log('exit');
   }
 
   render() {
