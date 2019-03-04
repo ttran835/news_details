@@ -1,5 +1,6 @@
 module.exports = {
   moduleFileExtensions: ['js', 'jsx', 'json'],
+  setupFiles: ['<rootDir>/node_modules/regenerator-runtime/runtime.js'],
   transform: {
     '.+\\.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$':
       'jest-transform-stub',
@@ -10,7 +11,7 @@ module.exports = {
     '^@/(.*)$': '<rootDir>/src/$1',
   },
   testMatch: [
-    '<rootDir>/__test__/*.spec.test(js|jsx|ts|tsx)|**/)',
+    '<rootDir>/__test__/**/*.test.(js|jsx|ts|tsx)|**/)',
     '<rootDir>/client/src/**/*.test.(js|jsx|ts|tsx)|**/)',
   ],
   transformIgnorePatterns: ['<rootDir>/node_modules/'],

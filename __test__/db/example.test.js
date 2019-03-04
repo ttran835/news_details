@@ -1,5 +1,5 @@
 const request = require('supertest');
-const server = require('../server/index');
+const server = require('../../server/index');
 
 describe('GET should access DB', () => {
   it('should send response back as 200', async () => {
