@@ -8,8 +8,8 @@
     "react-dev": "webpack -w",
     "start": "nodemon server/server.js",
     "seed": "nodemon database/seed/seed.js",
-    "scss-dev": "node-sass --watch client/src/styles/scss -o client/dist/styles/css",
-    "scss": "node-sass client/src/styles/scss -o client/src/styles/css",
+    "scss-dev": "node-sass --watch client/src/components -o client/src/styles/css/components",
+    "scss": "node-sass client/src/components -o client/src/styles/css/components",
     "test": "jest"
   },
   "repository": {
@@ -49,6 +49,7 @@
     "file-loader": "^3.0.1",
     "jest": "^24.0.0",
     "jest-cli": "^24.0.0",
+    "jest-transform-stub": "^2.0.0",
     "node-sass": "^4.11.0",
     "nodemon": "^1.18.9",
     "postcss-loader": "^3.0.0",
