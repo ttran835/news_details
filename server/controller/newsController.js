@@ -4,6 +4,7 @@ const express = require('express');
 
 const { news } = require('../../database/models/news');
 
+//This controller primarily acts as a Cron. It will grab news and update the database at midnight and delete the previous' day database
 const url = `https://newsapi.org/v2/everything?q=u.s.&apiKey=${
   process.env.NEWS_API
 }`;
