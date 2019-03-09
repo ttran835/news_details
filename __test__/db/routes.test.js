@@ -3,13 +3,12 @@ const server = require('../../server/index');
 
 describe('GET should access DB', () => {
   it('should send response back as 200', async () => {
-    const response = await request(server).get('/all');
+    const response = await request(server).get('/home');
     expect(response.status).toBe(200);
   });
 
   it('should return information from DB', async () => {
-    const response = await request(server).get('/all');
+    const response = await request(server).get('/home');
     expect(response.body.length).toBe(response.body.length);
   });
 });
-

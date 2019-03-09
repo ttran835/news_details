@@ -22,7 +22,7 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    this.getNews();
+    // this.getNews();
   }
 
   getNews() {
