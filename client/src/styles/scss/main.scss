@@ -1,4 +1,6 @@
-$main-bg: #000;
+@import './components/test.scss';
+
+$main-bg: #fff;
 $second-bg: #fff;
 
 @mixin font {

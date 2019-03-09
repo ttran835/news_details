@@ -1,9 +1,11 @@
 const Routes = require('express').Router();
 const { NewsController } = require('../controller/NewsController');
-const { TvController } = require('../controller/TvController');
+const { ClientNewsController } = require('../controller/clientNewsController');
 
-Routes.route('/all')
+Routes.route('/api/back-end')
   .get(NewsController.get)
   .post(NewsController.post);
+
+Routes.route('/home').get(ClientNewsController.get);
 
 module.exports = Routes;
