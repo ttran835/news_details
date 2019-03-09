@@ -1,6 +1,7 @@
 require('dotenv').config();
 const Axios = require('axios');
 const express = require('express');
+const { convertDataToJSON } = require('../../helper/jsonConverter.js');
 
 const { news } = require('../../database/models/news');
 
@@ -10,7 +11,21 @@ const url = `https://newsapi.org/v2/everything?q=u.s.&apiKey=${
 }`;
 
 const NewsController = {
+  //used to convert data into JSON for unit and intergration tests
   get: (req, res) => {
+    news
+      .findAll({})
+      .then(data => {
+        const convert = JSON.stringify(data);
+        convertDataToJSON(convert);
+        res.status(200).send(`Converted Data and saved. Return:${convert}`);
+      })
+      .catch(err => {
+        if (err) console.error(err);
+      });
+  },
+
+  post: (req, res) => {
     Axios.get(url)
       .then(response => {
         if (response) {
@@ -41,10 +56,6 @@ const NewsController = {
       .catch(err => {
         console.error(err);
       });
-  },
-
-  post: (req, res) => {
-    res.status(201).send('hello from homePost');
   },
 };
 

@@ -1,5 +1,5 @@
 const superTest = require('supertest');
-const server = require('../../server/index');
-const { db } = require('../../database/index');
+// const server = require('../../server/index');
+// const { db } = require('../../database/index');
 //Db model
-const { news } = require('../../database/models/news');
+// const { news } = require('../../database/models/news');
