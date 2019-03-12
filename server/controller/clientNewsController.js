@@ -18,6 +18,10 @@ const ClientNewsController = {
         if (err) console.error(err);
       });
   },
+
+  post: (req, res) => {
+    res.status(201).send('hello from post client');
+  },
 };
 
 module.exports = { ClientNewsController };

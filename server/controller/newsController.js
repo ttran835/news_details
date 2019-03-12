@@ -17,6 +17,7 @@ const NewsController = {
       .findAll({})
       .then(data => {
         const convert = JSON.stringify(data);
+        // convertDataToJSON(data);
         res
           .status(200)
           .send(`Converted Data and saved. Return:${typeof convert}`);
