@@ -17,8 +17,9 @@ const NewsController = {
       .findAll({})
       .then(data => {
         const convert = JSON.stringify(data);
-        convertDataToJSON(convert);
-        res.status(200).send(`Converted Data and saved. Return:${convert}`);
+        res
+          .status(200)
+          .send(`Converted Data and saved. Return:${typeof convert}`);
       })
       .catch(err => {
         if (err) console.error(err);
@@ -48,7 +49,7 @@ const NewsController = {
             })
             .then(response => {
               res
-                .status(200)
+                .status(201)
                 .send('Successfully saved information into database');
             });
         }
