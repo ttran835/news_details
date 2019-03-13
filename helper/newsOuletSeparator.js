@@ -12,7 +12,7 @@ const exampleData = [
   },
   {
     _id: 2,
-    source: [['id', 'wall-street-journal'], ['name', 'Wallstreet Journal ']],
+    source: [['id', 'wall-street-journal'], ['name', 'Wallstreet Journal']],
     author: 'DAVE PHILIPPS',
     title: 'White Supremacism in the U.S. Military, Explained',
   },

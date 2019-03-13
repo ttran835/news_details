@@ -57,7 +57,6 @@ describe('Function should separate newsoutlet into different category', () => {
     const testResult = separator['The New York Times'].map(elts => {
       return elts.source[1][1];
     });
-
     expect(testResult).toEqual(['The New York Times']);
   });
 });
