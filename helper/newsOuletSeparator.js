@@ -18,18 +18,19 @@ const exampleData = [
   },
 ];
 
+//to push into array of matching news publisher/outlet
 const NewsOuletSeparator = arr => {
-  let obj = {};
-  arr.forEach(elts => {
-    let source = elts.source;
-    obj[source[0][1]] = [];
+  //created object with category for news
+  const obj = {};
+  arr.forEach(article => {
+    const outlet = article.source[1][1];
+    if (obj[outlet]) {
+      obj[outlet].push(article);
+    } else {
+      obj[outlet] = [article];
+    }
   });
   return obj;
 };
 
-console.log(NewsOuletSeparator(exampleData));
-
-//to push into array of matching news publisher/outlet
-const categorizeNewsOutlets = arr => {};
-
-module.exports = { NewsOuletSeparator, categorizeNewsOutlets };
+module.exports = { NewsOuletSeparator };
