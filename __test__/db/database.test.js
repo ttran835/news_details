@@ -1,8 +1,24 @@
 const request = require('supertest');
 const server = require('../../server/index');
+const sequelize = require('sequelize');
+const { db } = require('../../database/index');
 
-describe('Should be able to get seperate Routes and return correct information', () => {
-  it('should send 200 status when hitting /home', async () => {
+describe('Should connect to DB and search for database information', () => {
+  beforeAll(function() {
+    db.authenticate()
+      .then(() => {
+        console.log('Connected to DB');
+      })
+      .catch(err => {
+        console.error(err);
+      });
+  });
+
+  afterAll(function() {
+    sequelize.close();
+  });
+
+  it('should pull articles from database when hitting /home', async () => {
     const response = await request(server).get('/home');
     expect(response.status).toBe(200);
   });
