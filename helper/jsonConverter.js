@@ -1,6 +1,11 @@
 //function to convert pg to JSON file.
 const path = require('path');
 const fs = require('fs');
+const Routes = require('../server/routes/Routes');
+const { NewsController } = require('../server/controller/newsController');
+// console.log(NewsController.get());
+
+// console.log(NewsController);
 
 const convertDataToJSON = (arr, fileName) => {
   if (fileName.includes('mock')) {
@@ -36,5 +41,4 @@ const convertDataToJSON = (arr, fileName) => {
   }
 };
 
-convertDataToJSON('hello', 'test_mock');
 module.exports = { convertDataToJSON };

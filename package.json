@@ -7,10 +7,9 @@
     "webpack": "webpack",
     "react-dev": "webpack -w",
     "start": "nodemon server/server.js",
-    "seed": "nodemon database/seed/seed.js",
     "scss-dev": "node-sass --watch client/src/components -o client/src/styles/css/components",
     "scss": "node-sass client/src/components -o client/src/styles/css/components",
-    "test": "jest"
+    "test": "jest --verbose"
   },
   "repository": {
     "type": "git",

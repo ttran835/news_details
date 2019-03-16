@@ -1,14 +1,12 @@
 const request = require('supertest');
-const {
-  NewsOuletSeparator,
-  categorizeNewsOutlets,
-} = require('../../helper/newsOuletSeparator');
+const { NewsOuletSeparator } = require('../../helper/newsOuletSeparator');
 
 //I can definitely have a seprate object. That object will have all newsOutlet
 //if it does not, then it will create a new property key.
 
 //the function needs to first create object key = [];
 //then push all of matching values into the array;
+
 describe('Function should separate newsoutlet into different category', () => {
   const exampleData = [
     {

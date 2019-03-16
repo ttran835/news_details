@@ -30,30 +30,28 @@ const NewsController = {
   post: (req, res) => {
     Axios.get(url)
       .then(response => {
-        if (response) {
-          let articles = response.data.articles;
-          articles
-            .map(article => {
-              news.create({
-                source: [
-                  ['id', article.source.id],
-                  ['name', article.source.name],
-                ],
-                author: article.author,
-                title: article.title,
-                description: article.description,
-                url: article.url,
-                urlToImage: article.urlToImage,
-                publishedAt: article.publishedAt,
-                content: article.content,
-              });
+        let articles = response.data.articles;
+        articles.forEach(article => {
+          news
+            .create({
+              source: [
+                ['id', article.source.id],
+                ['name', article.source.name],
+              ],
+              author: article.author,
+              title: article.title,
+              description: article.description,
+              url: article.url,
+              urlToImage: article.urlToImage,
+              publishedAt: article.publishedAt,
+              content: article.content,
             })
-            .then(response => {
-              res
-                .status(201)
-                .send('Successfully saved information into database');
-            });
-        }
+            .then(() => {
+              console.log('successfully saved');
+            })
+            .catch(err => console.error(err));
+        });
+        res.status(201).send('Successfully saved information into database');
       })
       .catch(err => {
         console.error(err);

@@ -2,8 +2,19 @@ const request = require('supertest');
 const { convertDataToJSON } = require('../../helper/jsonConverter');
 const fs = require('fs');
 jest.mock('fs');
+const { db } = require('../../database/index');
+const sequelize = require('sequelize');
 
-describe('Function to create a new JSON file from Postgres DB', () => {
+describe('Function to create a new JSON file from Postgres DB', async () => {
+  beforeAll(function() {
+    console.log('starting test');
+  });
+
+  afterAll(function() {
+    sequelize.close();
+    db.close();
+  });
+
   const testResult = convertDataToJSON;
   const filePath = '__test__/fake_data/data_mock/test_mock.json';
 
