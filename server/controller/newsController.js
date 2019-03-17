@@ -1,6 +1,7 @@
 require('dotenv').config();
 const Axios = require('axios');
 const express = require('express');
+const { convertDataToJSON } = require('../../helper/jsonConverter.js');
 
 const { news } = require('../../database/models/news');
 
@@ -10,41 +11,51 @@ const url = `https://newsapi.org/v2/everything?q=u.s.&apiKey=${
 }`;
 
 const NewsController = {
+  //used to convert data into JSON for unit and intergration tests
   get: (req, res) => {
-    Axios.get(url)
-      .then(response => {
-        if (response) {
-          let articles = response.data.articles;
-          articles
-            .map(article => {
-              news.create({
-                source: [
-                  ['id', article.source.id],
-                  ['name', article.source.name],
-                ],
-                author: article.author,
-                title: article.title,
-                description: article.description,
-                url: article.url,
-                urlToImage: article.urlToImage,
-                publishedAt: article.publishedAt,
-                content: article.content,
-              });
-            })
-            .then(response => {
-              res
-                .status(200)
-                .send('Successfully saved information into database');
-            });
-        }
+    news
+      .findAll({})
+      .then(data => {
+        const convert = JSON.stringify(data);
+        // convertDataToJSON(data);
+        res
+          .status(200)
+          .send(`Converted Data and saved. Return:${typeof convert}`);
       })
       .catch(err => {
-        console.error(err);
+        if (err) console.error(err);
       });
   },
 
   post: (req, res) => {
-    res.status(201).send('hello from homePost');
+    Axios.get(url)
+      .then(response => {
+        let articles = response.data.articles;
+        articles.forEach(article => {
+          news
+            .create({
+              source: [
+                ['id', article.source.id],
+                ['name', article.source.name],
+              ],
+              author: article.author,
+              title: article.title,
+              description: article.description,
+              url: article.url,
+              urlToImage: article.urlToImage,
+              publishedAt: article.publishedAt,
+              content: article.content,
+            })
+            .then(() => {
+              console.log('successfully saved');
+            })
+            .catch(err => console.error(err));
+        });
+        res.status(201).send('Successfully saved information into database');
+      })
+      .catch(err => {
+        console.error(err);
+      });
   },
 };
 

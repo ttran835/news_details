@@ -1,13 +1,9 @@
 //Jest and webpack are currently using differente version due to updating to correct dependencies issues
 {
   /* Uncomment line 4 when developing and running unit tests and also comment out all plugins*/
-  // "presets": ["@babel/preset-env", "@babel/react"],
-  /*When creating dunble, uncomment line 7*/
-  "presets": ["env", "react", "stage-0"],
+  "presets": ["@babel/preset-env", "@babel/react"],
   "plugins": [
-    "transform-class-properties",
-    "transform-decorators",
-    "transform-react-constant-elements",
-    "transform-react-inline-elements"
+    "@babel/plugin-proposal-object-rest-spread",
+    "@babel/plugin-transform-runtime"
   ]
 }

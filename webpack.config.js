@@ -16,10 +16,10 @@ module.exports = {
         test: /\.js[x]?/,
         exclude: /node_modules/,
         options: {
-          presets: [['env', { modules: false }], 'react'],
+          presets: [['@babel/preset-env', { modules: false }], '@babel/react'],
           env: {
             test: {
-              presets: [['env'], 'react'],
+              presets: [['@babel/preset-env'], '@babel/react'],
             },
           },
         },
@@ -55,36 +55,6 @@ module.exports = {
           },
         ],
       },
-      // {
-      //   test: /\.scss$/,
-      //   exclude: /node_modules/,
-      //   use: [
-      //     {
-      //       loader: 'style-loader',
-      //     },
-      //     {
-      //       loader: 'css-loader',
-      //       options: {
-      //         sourceMap: true,
-      //       },
-      //     },
-      //     {
-      //       loader: 'resolve-url-loader',
-      //     },
-      //     {
-      //       loader: 'postcss-loader',
-      //       options: {
-      //         sourceMap: true,
-      //       },
-      //     },
-      //     {
-      //       loader: 'sass-loader',
-      //       options: {
-      //         sourceMap: true,
-      //       },
-      //     },
-      //   ],
-      // },
       {
         test: /\.json$/,
         loader: 'json-loader',
