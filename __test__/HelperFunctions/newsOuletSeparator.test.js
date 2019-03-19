@@ -44,17 +44,19 @@ describe('Function should separate newsoutlet into different category', () => {
   };
 
   const objectKeys = ['The New York Times', 'Wallstreet Journal'];
-  it('should create new object with correct key properties with name of newsOutlet', async () => {
+  it('should create new object with correct key properties with name of newsOutlet', async done => {
     const testResults = NewsOuletSeparator(exampleData);
     expect(testResults).toMatchObject(returnObject);
     expect(Object.keys(returnObject)).toEqual(objectKeys);
+    done();
   });
 
-  it('should push the newsoutlet company to the correct array', async () => {
+  it('should push the newsoutlet company to the correct array', async done => {
     const separator = NewsOuletSeparator(exampleData);
     const testResult = separator['The New York Times'].map(elts => {
       return elts.source[1][1];
     });
     expect(testResult).toEqual(['The New York Times']);
+    done();
   });
 });
