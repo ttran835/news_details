@@ -2,13 +2,14 @@
 const { db } = require('../../database/index');
 const Sequelize = require('sequelize');
 
-const englishWords = db.define('engishWords', {
-  wordsArr: Sequelize.ARRAY(Sequelize.TEXT),
+const wordCheck = db.define('wordcheck', {
+  _id: { type: Sequelize.INTEGER, autoIncrement: true, primaryKey: true },
+  word: Sequelize.STRING,
 });
 
-englishWords
-  .sync()
-  .then(() => console.log(`synced with englishWords`))
-  .catch(err => console.error(err));
+// wordCheck
+//   .sync()
+//   .then(() => console.log(`synced with wordCheck`))
+//   .catch(err => console.error(err));
 
-module.exports = { engishWords };
+module.exports = { wordCheck };
