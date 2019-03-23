@@ -8,4 +8,4 @@ client/src/styles/css
 __test__/fake_data/
 __test__/data_mock/
 
-database/seed/dictionary.json
+database/seed/dictionaryArr.json
