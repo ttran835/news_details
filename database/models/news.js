@@ -19,9 +19,9 @@ const news = db.define(
   }
 );
 
-// news
-//   .sync()
-//   .then(() => console.log('Synced with DB'))
-//   .catch(err => console.error(err));
+news
+  .sync()
+  .then(() => console.log('Synced with DB'))
+  .catch(err => console.error(err));
 
 module.exports = { news };

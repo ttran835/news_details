@@ -7,9 +7,9 @@ const wordCheck = db.define('wordcheck', {
   word: Sequelize.STRING,
 });
 
-// wordCheck
-//   .sync()
-//   .then(() => console.log(`synced with wordCheck`))
-//   .catch(err => console.error(err));
+wordCheck
+  .sync()
+  .then(() => console.log(`synced with wordCheck`))
+  .catch(err => console.error(err));
 
 module.exports = { wordCheck };

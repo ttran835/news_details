@@ -3,8 +3,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const path = require('path');
-// const db = require('../database/index');
-
+const db = require('../database/index');
 //models
 const Router = require('./routes/Routes');
 
