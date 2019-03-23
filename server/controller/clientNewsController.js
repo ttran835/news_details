@@ -7,8 +7,18 @@ const ClientNewsController = {
   get: (req, res) => {
     const { searchTerm } = req.body;
     if (searchTerm) {
-      res.status(200).send(searchTerm);
+      searchTerm.replace(/ /g, '_');
+      Axios.get(
+        `https://newsapi.org/v2/top-headlines?q=${searchTerm}&apiKey=${
+          process.env.NEWS_API
+        }`
+      )
+        .then(data => {
+          res.status(200).send(data);
+        })
+        .catch(err => console.error(err));
     } else {
+      //get news from news API
       news
         .findAll({})
         .then(articles => {
