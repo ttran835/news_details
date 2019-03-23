@@ -14,38 +14,49 @@ findAll({
 
 iterate through word string, then check whether or not they exit in database
 if they exist in database, set englishWords to true;
+
+process.env.DATAMUSE
 */
 const ClientNewsController = {
   get: (req, res) => {
     const { searchTerm } = req.body;
     if (searchTerm) {
       let englishWords = true;
-      const word = searchTerm.split(' ');
-      console.log({ word });
-      word.forEach(elt => {
-        console.log({ elt });
-        wordCheck
-          .findAll({
-            where: {
-              word: {
-                $like: `%${elt}%`,
-              },
-            },
-          })
-          .then(words => {
-            console.log('will it hit his statement', words);
-          });
+      const wordsArr = searchTerm.split(' ');
+
+      const wordArrForAxios = wordsArr.map(word => {
+        return `${process.env.DATAMUSE}/sug?s=${word}`;
       });
-      searchTerm.replace(/ /g, '_');
-      Axios.get(
-        `https://newsapi.org/v2/top-headlines?q=${searchTerm}&apiKey=${
-          process.env.NEWS_API
-        }`
-      )
-        .then(data => {
-          res.status(200).send(data);
-        })
-        .catch(err => console.error(err));
+
+      console.log({ wordArrForAxios });
+
+      wordArrForAxios.forEach(word => {
+        Axios.get(word)
+          .then(response => {
+            console.log(response);
+          })
+          .catch(err => console.error(err));
+      });
+      // wordArrForAxios.forEach(word => {
+      //   console.log({ word });
+      //   Axios.all([Axios.get(word)])
+      //     .then(
+      //       Axios.spread(words => {
+      //         console.log({ words });
+      //       })
+      //     )
+      //     .catch(err => console.error(err));
+      // });
+      // searchTerm.replace(/ /g, '_');
+      // Axios.get(
+      //   `https://newsapi.org/v2/top-headlines?q=${searchTerm}&apiKey=${
+      //     process.env.NEWS_API
+      //   }`
+      // )
+      //   .then(data => {
+      //     res.status(200).send(data);
+      //   })
+      //   .catch(err => console.error(err));
     } else {
       //get news from news API
       news
