@@ -3,6 +3,7 @@ const Axios = require('Axios');
 const express = require('express');
 const { news } = require('../../database/models/news');
 const { wordCheck } = require('../../database/models/wordCheck');
+const { spellingCheck } = require('../../helper/spellingCheck');
 
 /*
 findAll({
@@ -16,12 +17,19 @@ iterate through word string, then check whether or not they exit in database
 if they exist in database, set englishWords to true;
 
 process.env.DATAMUSE
+
+Need to write test cases to ensure that changing and testing the information works
+This means right after the words are change, we would replace it with that word that works. 
+Damn, making it a lot more complicated than expected
+
+Would I still need the db? 
+Would I be able to use it redis caching?
+
 */
 const ClientNewsController = {
   get: (req, res) => {
     const { searchTerm } = req.body;
     if (searchTerm) {
-      let englishWords = true;
       const wordsArr = searchTerm.split(' ');
 
       const wordArrForAxios = wordsArr.map(word => {
@@ -30,13 +38,21 @@ const ClientNewsController = {
 
       console.log({ wordArrForAxios });
 
-      wordArrForAxios.forEach(word => {
-        Axios.get(word)
-          .then(response => {
-            console.log(response);
-          })
-          .catch(err => console.error(err));
-      });
+      // wordArrForAxios.forEach(word => {
+
+      Axios.get(wordArrForAxios[0])
+        .then(response => {
+          const testData = response.data;
+          const bestMatch = testData.map(elt => {
+            let scoreArr = Object.values(elt.score);
+            console.log({ scoreArr });
+            return Math.max(scoreArr);
+          });
+          console.log({ testData });
+          console.log({ bestMatch });
+        })
+        .catch(err => console.error(err));
+      // });
       // wordArrForAxios.forEach(word => {
       //   console.log({ word });
       //   Axios.all([Axios.get(word)])
@@ -48,6 +64,7 @@ const ClientNewsController = {
       //     .catch(err => console.error(err));
       // });
       // searchTerm.replace(/ /g, '_');
+      //    This will be use to replace the string after.
       // Axios.get(
       //   `https://newsapi.org/v2/top-headlines?q=${searchTerm}&apiKey=${
       //     process.env.NEWS_API
