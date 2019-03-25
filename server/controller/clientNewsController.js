@@ -1,18 +1,11 @@
 require('dotenv').config();
 const Axios = require('Axios');
 const express = require('express');
+const { spellingCheck } = require('../../helper/spellingCheck');
 const { news } = require('../../database/models/news');
 const { wordCheck } = require('../../database/models/wordCheck');
-const { spellingCheck } = require('../../helper/spellingCheck/spellingCheck');
 
 /*
-findAll({
-        limit: 10,
-        where: {
-            asset_name: {
-                $like: '%' + request.body.query + '%'
-            }
-
 iterate through word string, then check whether or not they exit in database
 if they exist in database, set englishWords to true;
 
@@ -30,41 +23,38 @@ const ClientNewsController = {
   get: (req, res) => {
     const { searchTerm } = req.body;
     if (searchTerm) {
-      const correctStr = [];
       const strArr = searchTerm.split(' ');
-      //to handle Axios responses
+      let axiosPromises;
 
-      let completeAxiosPromises;
-      const axiosPromises = [];
-
-      strArr.forEach(word => {
-        axiosPromises.push(Axios.get(`https://api.datamuse.com/sug?s=${word}`));
+      axiosPromises = strArr.map(word => {
+        return Axios.get(`https://api.datamuse.com/sug?s=${word}`);
       });
-      console.log(axiosPromises);
+
       Axios.all(axiosPromises)
         .then(responses => {
           let axiosReponseObj = {};
           responses.forEach(response => {
-            const path = response.request.path;
+            const path = response.request.path.slice(
+              response.request.path.indexOf('=') + 1
+            );
             const data = response.data;
             axiosReponseObj[path] = data;
           });
-          res.status(200).send(axiosReponseObj);
+
+          const correctedSearchQuery = spellingCheck(axiosReponseObj);
+          return Axios.get(
+            `https://newsapi.org/v2/top-headlines?q=${correctedSearchQuery}&apiKey=${
+              process.env.NEWS_API
+            }`
+          );
+        })
+        .then(datas => {
+          console.log(datas);
+          const article = datas.data.articles;
+          console.log(article);
+          res.status(200).send(article);
         })
         .catch(err => console.error(err));
-      // console.log(completeAxiosPromises);
-      // console.log({ correctStr });
-      // searchTerm.replace(/ /g, '_');
-      // //  This will be use to replace the string after.
-      // Axios.get(
-      //   `https://newsapi.org/v2/top-headlines?q=${searchTerm}&apiKey=${
-      //     process.env.NEWS_API
-      //   }`
-      // )
-      //   .then(data => {
-      //     res.status(200).send(data);
-      //   })
-      //   .catch(err => console.error(err));
     } else {
       //get news from news API
       news
