@@ -9,7 +9,7 @@ const seedEnlgishWords = arr => {
   arr.forEach(word => {
     wordCheck
       .create({
-        wordsArr: word,
+        word: word,
       })
       .then(() => console.log('words saved'))
       .catch(err => console.error(err));
