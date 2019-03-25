@@ -3,7 +3,7 @@ const Axios = require('Axios');
 const express = require('express');
 const { news } = require('../../database/models/news');
 const { wordCheck } = require('../../database/models/wordCheck');
-const { spellingCheck } = require('../../helper/spellingCheck');
+const { spellingCheck } = require('../../helper/spellingCheck/spellingCheck');
 
 /*
 findAll({
@@ -30,41 +30,32 @@ const ClientNewsController = {
   get: (req, res) => {
     const { searchTerm } = req.body;
     if (searchTerm) {
-      const wordsArr = searchTerm.split(' ');
+      const correctStr = [];
+      const strArr = searchTerm.split(' ');
+      //to handle Axios responses
 
-      const wordArrForAxios = wordsArr.map(word => {
-        return `${process.env.DATAMUSE}/sug?s=${word}`;
+      let completeAxiosPromises;
+      const axiosPromises = [];
+
+      strArr.forEach(word => {
+        axiosPromises.push(Axios.get(`https://api.datamuse.com/sug?s=${word}`));
       });
-
-      console.log({ wordArrForAxios });
-
-      // wordArrForAxios.forEach(word => {
-
-      Axios.get(wordArrForAxios[0])
-        .then(response => {
-          const testData = response.data;
-          const bestMatch = testData.map(elt => {
-            let scoreArr = Object.values(elt.score);
-            console.log({ scoreArr });
-            return Math.max(scoreArr);
+      console.log(axiosPromises);
+      Axios.all(axiosPromises)
+        .then(responses => {
+          let axiosReponseObj = {};
+          responses.forEach(response => {
+            const path = response.request.path;
+            const data = response.data;
+            axiosReponseObj[path] = data;
           });
-          console.log({ testData });
-          console.log({ bestMatch });
+          res.status(200).send(axiosReponseObj);
         })
         .catch(err => console.error(err));
-      // });
-      // wordArrForAxios.forEach(word => {
-      //   console.log({ word });
-      //   Axios.all([Axios.get(word)])
-      //     .then(
-      //       Axios.spread(words => {
-      //         console.log({ words });
-      //       })
-      //     )
-      //     .catch(err => console.error(err));
-      // });
+      // console.log(completeAxiosPromises);
+      // console.log({ correctStr });
       // searchTerm.replace(/ /g, '_');
-      //    This will be use to replace the string after.
+      // //  This will be use to replace the string after.
       // Axios.get(
       //   `https://newsapi.org/v2/top-headlines?q=${searchTerm}&apiKey=${
       //     process.env.NEWS_API
@@ -93,3 +84,39 @@ const ClientNewsController = {
 };
 
 module.exports = { ClientNewsController };
+
+//iteration
+
+/*
+// const wordArrForAxios = wordsArr.map(word => {
+      //   return `${process.env.DATAMUSE}/sug?s=${word}`;
+      // });
+
+      // console.log({ wordArrForAxios });
+
+      // wordArrForAxios.forEach(word => {
+
+      // Axios.get(wordArrForAxios[0])
+      //   .then(response => {
+      //     const testData = response.data;
+      //     const bestMatch = testData.map(elt => {
+      //       let scoreArr = Object.values(elt.score);
+      //       console.log({ scoreArr });
+      //       return Math.max(scoreArr);
+      //     });
+      //     console.log({ testData });
+      //     console.log({ bestMatch });
+      //   })
+      //   .catch(err => console.error(err));
+      // });
+      // wordArrForAxios.forEach(word => {
+      //   console.log({ word });
+      //   Axios.all([Axios.get(word)])
+      //     .then(
+      //       Axios.spread(words => {
+      //         console.log({ words });
+      //       })
+      //     )
+      //     .catch(err => console.error(err));
+      // });
+*/
