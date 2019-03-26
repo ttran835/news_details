@@ -25,9 +25,9 @@ const ClientNewsController = {
     if (searchTerm) {
       const strArr = searchTerm.split(' ');
       let axiosPromises;
-      axiosPromises = strArr.map(word => {
-        return Axios.get(`https://api.datamuse.com/sug?s=${word}`);
-      });
+      axiosPromises = strArr.map(word =>
+        Axios.get(`https://api.datamuse.com/sug?s=${word}`)
+      );
 
       //loop through Axios requests
       Axios.all(axiosPromises)
@@ -48,9 +48,11 @@ const ClientNewsController = {
             }
           });
           const correctedSearchQuery = spellingCheck(axiosReponseObj);
+          const correctedWord = correctedSearchQuery[0].word;
+          console.log({ correctedWord });
 
           return Axios.get(
-            `https://newsapi.org/v2/top-headlines?q=${correctedSearchQuery}&apiKey=${
+            `https://newsapi.org/v2/top-headlines?q=${correctedWord}&apiKey=${
               process.env.NEWS_API
             }`
           );
@@ -69,7 +71,7 @@ const ClientNewsController = {
         })
         .catch(err => console.error(err));
     } else {
-      //get news from news API
+      //get news from news API on initial start-up
       news
         .findAll({})
         .then(articles => {
@@ -87,39 +89,3 @@ const ClientNewsController = {
 };
 
 module.exports = { ClientNewsController };
-
-//iteration
-
-/*
-// const wordArrForAxios = wordsArr.map(word => {
-      //   return `${process.env.DATAMUSE}/sug?s=${word}`;
-      // });
-
-      // console.log({ wordArrForAxios });
-
-      // wordArrForAxios.forEach(word => {
-
-      // Axios.get(wordArrForAxios[0])
-      //   .then(response => {
-      //     const testData = response.data;
-      //     const bestMatch = testData.map(elt => {
-      //       let scoreArr = Object.values(elt.score);
-      //       console.log({ scoreArr });
-      //       return Math.max(scoreArr);
-      //     });
-      //     console.log({ testData });
-      //     console.log({ bestMatch });
-      //   })
-      //   .catch(err => console.error(err));
-      // });
-      // wordArrForAxios.forEach(word => {
-      //   console.log({ word });
-      //   Axios.all([Axios.get(word)])
-      //     .then(
-      //       Axios.spread(words => {
-      //         console.log({ words });
-      //       })
-      //     )
-      //     .catch(err => console.error(err));
-      // });
-*/
