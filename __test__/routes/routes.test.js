@@ -52,6 +52,7 @@ describe('Client able to get certain articles based on search term', () => {
     done();
   });
 });
+
 describe('GET request to /api/back-end should work properly without throwing errors', () => {
   it('should send 200 status when hitting /api/back-end', async done => {
     const response = await request(server).get('/api/back-end');
