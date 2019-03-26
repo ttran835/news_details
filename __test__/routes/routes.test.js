@@ -23,14 +23,14 @@ describe('GET request to /home should work properly without throwing errors', ()
 
 describe('Client able to get certain articles based on search term', () => {
   const exampleSearch1 = { searchTerm: 'Stock' };
-  const exampleSearch2 = { searchTerm: 'trump in us' };
-  const exampleSearch3 = { searchTerm: 'gidfa' };
+  const exampleSearch2 = { searchTerm: 'trump in u.s.' };
+  const exampleSearch3 = { searchTerm: 'gidfa fadsf' };
 
   it('should return articles for Stock market', async done => {
     const response = await request(server)
       .get('/home')
       .send(exampleSearch1);
-    expect(response.body.data.articles.length).toBeDefined();
+    expect(response.body.length).toBeGreaterThanOrEqual(1);
     done();
   });
 
@@ -38,7 +38,7 @@ describe('Client able to get certain articles based on search term', () => {
     const response = await request(server)
       .get('/home')
       .send(exampleSearch2);
-    expect(response.body.data.articles.length).toBeDefined();
+    expect(response.body.length).toBeGreaterThanOrEqual(1);
     done();
   });
 
@@ -46,7 +46,10 @@ describe('Client able to get certain articles based on search term', () => {
     const response = await request(server)
       .get('/home')
       .send(exampleSearch3);
-    exepect(response.text).toBe('No articles found.');
+    expect(response.text).toBe(
+      'Cannot find any articles. Have you try typing in something that is not random?'
+    );
+    done();
   });
 });
 describe('GET request to /api/back-end should work properly without throwing errors', () => {
