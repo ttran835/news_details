@@ -20,7 +20,7 @@ const NewsController = {
         // convertDataToJSON(data);
         res
           .status(200)
-          .send(`Converted Data and saved. Return:${typeof convert}`);
+          .send(`Converted Data and saved. Return: ${typeof convert}`);
       })
       .catch(err => {
         if (err) console.error(err);
@@ -46,9 +46,7 @@ const NewsController = {
               publishedAt: article.publishedAt,
               content: article.content,
             })
-            .then(() => {
-              console.log('successfully saved');
-            })
+            .then(() => console.log('data saved'))
             .catch(err => console.error(err));
         });
         res.status(201).send('Successfully saved information into database');

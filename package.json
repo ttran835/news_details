@@ -9,7 +9,7 @@
     "start": "nodemon server/server.js",
     "scss-dev": "node-sass --watch client/src/components -o client/src/styles/css/components",
     "scss": "node-sass client/src/components -o client/src/styles/css/components",
-    "test": "jest --verbose --passWithNoTests",
+    "test": "jest --verbose --passWithNoTests --detectOpenHandles",
     "seed": "node database/seed/seedFunction.js"
   },
   "repository": {
