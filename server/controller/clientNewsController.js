@@ -25,38 +25,53 @@ const ClientNewsController = {
     if (searchTerm) {
       const strArr = searchTerm.split(' ');
       let axiosPromises;
+      axiosPromises = strArr.map(word =>
+        Axios.get(`https://api.datamuse.com/sug?s=${word}`)
+      );
 
-      axiosPromises = strArr.map(word => {
-        return Axios.get(`https://api.datamuse.com/sug?s=${word}`);
-      });
-
+      //loop through Axios requests
       Axios.all(axiosPromises)
         .then(responses => {
           let axiosReponseObj = {};
           responses.forEach(response => {
-            const path = response.request.path.slice(
-              response.request.path.indexOf('=') + 1
-            );
             const data = response.data;
-            axiosReponseObj[path] = data;
+            if (response.request.path !== undefined) {
+              const path = response.request.path.slice(
+                response.request.path.indexOf('=') + 1
+              );
+              axiosReponseObj[path] = data;
+            } else {
+              data.sort((a, b) => {
+                return b.score - a.score;
+              });
+              axiosReponseObj[data[0].word] = data;
+            }
           });
-
           const correctedSearchQuery = spellingCheck(axiosReponseObj);
+          const correctedWord = correctedSearchQuery[0].word;
+          console.log({ correctedWord });
+
           return Axios.get(
-            `https://newsapi.org/v2/top-headlines?q=${correctedSearchQuery}&apiKey=${
+            `https://newsapi.org/v2/top-headlines?q=${correctedWord}&apiKey=${
               process.env.NEWS_API
             }`
           );
         })
         .then(datas => {
-          console.log(datas);
           const article = datas.data.articles;
-          console.log(article);
-          res.status(200).send(article);
+          if (article.length !== 0) {
+            res.status(200).send(article);
+          } else {
+            res
+              .status(200)
+              .send(
+                `Cannot find any articles. Have you try typing in something that is not random?`
+              );
+          }
         })
         .catch(err => console.error(err));
     } else {
-      //get news from news API
+      //get news from news API on initial start-up
       news
         .findAll({})
         .then(articles => {
@@ -74,39 +89,3 @@ const ClientNewsController = {
 };
 
 module.exports = { ClientNewsController };
-
-//iteration
-
-/*
-// const wordArrForAxios = wordsArr.map(word => {
-      //   return `${process.env.DATAMUSE}/sug?s=${word}`;
-      // });
-
-      // console.log({ wordArrForAxios });
-
-      // wordArrForAxios.forEach(word => {
-
-      // Axios.get(wordArrForAxios[0])
-      //   .then(response => {
-      //     const testData = response.data;
-      //     const bestMatch = testData.map(elt => {
-      //       let scoreArr = Object.values(elt.score);
-      //       console.log({ scoreArr });
-      //       return Math.max(scoreArr);
-      //     });
-      //     console.log({ testData });
-      //     console.log({ bestMatch });
-      //   })
-      //   .catch(err => console.error(err));
-      // });
-      // wordArrForAxios.forEach(word => {
-      //   console.log({ word });
-      //   Axios.all([Axios.get(word)])
-      //     .then(
-      //       Axios.spread(words => {
-      //         console.log({ words });
-      //       })
-      //     )
-      //     .catch(err => console.error(err));
-      // });
-*/
