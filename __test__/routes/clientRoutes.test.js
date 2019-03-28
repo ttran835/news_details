@@ -27,7 +27,7 @@ describe('GET request to /home should work properly without throwing errors', ()
 describe('Client able to get certain articles based on search term', () => {
   const exampleSearch1 = { searchTerm: 'Stock' };
   const exampleSearch2 = { searchTerm: 'trump in u.s.' };
-  const exampleSearch3 = { searchTerm: 'gidfa fadsf' };
+  const exampleSearch3 = { searchTerm: 'jksgjkldjg fadsf' };
 
   it('should return articles for Stock market', async done => {
     const response = await request(server)
@@ -52,43 +52,6 @@ describe('Client able to get certain articles based on search term', () => {
     expect(response.text).toBe(
       'Cannot find any articles. Have you try typing in something that is not random?'
     );
-    done();
-  });
-});
-
-// api Route
-describe('GET request to /api/back-end should work properly without throwing errors', () => {
-  beforeAll(function() {
-    console.log('starting test');
-  });
-
-  afterAll(function() {
-    sequelize.close();
-    db.close();
-    news.close();
-  });
-
-  it('should send 200 status when hitting /api/back-end', async done => {
-    const response = await request(server).get('/api/back-end');
-    expect(response.status).toBe(200);
-    done();
-  });
-
-  it('should return a JSON stringified object', async done => {
-    const response = await request(server).get('/api/back-end');
-    expect(response.text).toBe('Converted Data and saved. Return: string');
-    done();
-  });
-
-  it('should send 201 status when hitting /api/back-end', async done => {
-    const response = await request(server).post('/api/back-end');
-    expect(response.status).toBe(201);
-    done();
-  });
-
-  it('should successfully save data from API into the database', async done => {
-    const response = await request(server).post('/api/back-end');
-    expect(response.text).toBe('Successfully saved information into database');
     done();
   });
 });
