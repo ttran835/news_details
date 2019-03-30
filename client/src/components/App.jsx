@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import Axios from 'axios';
 
-//test components
+// components
 import Link from '../components/Link/Link';
+import AllNews from '../components/AllNews/AllNews';
+import { request } from 'https';
 
 export default class App extends Component {
   constructor(props) {
@@ -17,12 +19,13 @@ export default class App extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
 
-    // Axios.defaults.baseURL = `localhost:1128`;
-    //Axios.defaults.baseURL =
+    Axios.defaults.baseURL = `localhost:${process.env.SERVER_PORT}`;
+    // Axios.defaults.baseURL =
   }
 
   componentDidMount() {
     // this.getNews();
+    console.log(Axios.defaults.baseURL);
   }
 
   getNews() {
@@ -58,10 +61,9 @@ export default class App extends Component {
             </label>
             <input type="submit" value="Submit" />
           </form>
-        </div>
-        <div>
-          <h1>Test</h1>
-          <Link />
+          <div>
+            <AllNews />
+          </div>
         </div>
       </div>
     );

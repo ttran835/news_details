@@ -2,6 +2,24 @@ const path = require('path');
 const webpack = require('webpack');
 require('dotenv').config();
 
+const CSSModuleLoader = {
+  loader: 'css-loader',
+  options: {
+    modules: true,
+    sourceMap: true,
+    localIdentName: '[local]__[hash:base64:5]',
+    minimize: true,
+  },
+};
+
+const CSSLoader = {
+  loader: 'css-loader',
+  options: {
+    modules: false,
+    sourceMap: true,
+    minimize: true,
+  },
+};
 module.exports = {
   mode: 'development',
   entry: path.resolve(__dirname, './client/src/'),
@@ -50,7 +68,10 @@ module.exports = {
           {
             loader: 'sass-loader',
             options: {
+              modules: true,
+              localIdentName: '[path]__[name]__[local]--[hash:base64]',
               sourceMap: true,
+              minimize: true,
             },
           },
         ],
@@ -76,7 +97,7 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
       'process.env.HOSTNAME': JSON.stringify(process.env.USER),
-      'process.env.PORT': JSON.stringify(process.env.SERVER_PORT),
+      'process.env.SERVER_PORT': JSON.stringify(process.env.SERVER_PORT),
     }),
   ],
 };
