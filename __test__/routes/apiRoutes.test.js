@@ -34,8 +34,13 @@ describe('GET request to /api/back-end should work properly without throwing err
   });
 
   it('should successfully save data from API into the database', async done => {
-    const response = await request(server).post('/api/back-end');
-    expect(response.text).toBe('Successfully saved information into database');
+    const response = (await request(server))
+      .post('/api/back-end')
+      .then((err, res) => {
+        expect(err).toBeFalsy();
+        expect(res).toBeTruthy();
+      })
+      .catch(err => console.error(err));
     done();
   });
 });
