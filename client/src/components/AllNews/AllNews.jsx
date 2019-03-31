@@ -1,6 +1,7 @@
 import React from 'react';
-import styles from './AllNews.css';
+import styles from './AllNews.module.scss';
 
+console.log({ styles });
 export default function AllNews(props) {
   return (
     <div className="container">

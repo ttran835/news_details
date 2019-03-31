@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const autoprefixer = require('autoprefixer');
 require('dotenv').config();
 
 const CSSModuleLoader = {
@@ -7,8 +8,8 @@ const CSSModuleLoader = {
   options: {
     modules: true,
     sourceMap: true,
-    localIdentName: '[local]__[hash:base64:5]',
-    minimize: true,
+    localIdentName: '[path]__[name]__[local]--[hash:base64]',
+    // minimize: true,
   },
 };
 
@@ -17,7 +18,21 @@ const CSSLoader = {
   options: {
     modules: false,
     sourceMap: true,
-    minimize: true,
+    // minimize: true,
+    localIdentName: '[path]__[name]__[local]--[hash:base64]',
+  },
+};
+
+const postCSSLoader = {
+  loader: 'postcss-loader',
+  options: {
+    ident: 'postcssrc',
+    sourceMap: true,
+    plugins: () => [
+      autoprefixer({
+        browsers: ['>1%', 'last 4 versions', 'Firefox ESR', 'not ie < 9'],
+      }),
+    ],
   },
 };
 module.exports = {
@@ -43,38 +58,13 @@ module.exports = {
         },
       },
       {
-        test: /\.css$/,
-        use: [
-          {
-            loader: 'css-loader',
-            options: {
-              modules: true,
-              localIdentName: '[path]__[name]__[local]--[hash:base64]',
-              sourceMap: true,
-              minimize: true,
-            },
-          },
-          {
-            loader: 'postcss-loader',
-            options: {
-              sourceMap: true,
-              plugins: () => [
-                require('autoprefixer')({
-                  browsers: ['> 1%', 'last 2 versions'],
-                }),
-              ],
-            },
-          },
-          {
-            loader: 'sass-loader',
-            options: {
-              modules: true,
-              localIdentName: '[path]__[name]__[local]--[hash:base64]',
-              sourceMap: true,
-              minimize: true,
-            },
-          },
-        ],
+        test: /\.scss$/,
+        exclude: /\.module\.scss$/,
+        use: ['style-loader', CSSLoader, postCSSLoader, 'sass-loader'],
+      },
+      {
+        test: /\.module\.scss$/,
+        use: ['style-loader', CSSModuleLoader, postCSSLoader, 'sass-loader'],
       },
       {
         test: /\.json$/,
