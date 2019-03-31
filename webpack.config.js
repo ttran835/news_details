@@ -83,6 +83,7 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx'],
   },
+
   // this is used to proxy ports
   plugins: [
     new webpack.DefinePlugin({
