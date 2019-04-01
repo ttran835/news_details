@@ -7,9 +7,8 @@
     "webpack": "webpack",
     "react-dev": "webpack -w",
     "start": "nodemon server/server.js",
-    "scss-dev": "node-sass --watch client/src/styles -o client/dist/styles/",
+    "scss-dev": "node-sass --watch client/src/styles -o client/dist/styles/ ",
     "scss": "node-sass client/src/styles -o client/dist/styles/",
-    "scss-components": "node-sass client/src/components -o client/src/components",
     "test": "jest --verbose --passWithNoTests --detectOpenHandles",
     "seed": "node database/seed/seedFunction.js"
   },
