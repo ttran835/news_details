@@ -1,0 +1,9 @@
+@import '../../../styles/custom.scss';
+
+.materialUiShadow {
+  @include materialUiShadow;
+}
+
+.materialUiShadow:hover {
+  @include materialUiShadowHover;
+}

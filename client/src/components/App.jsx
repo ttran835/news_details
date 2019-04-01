@@ -3,7 +3,7 @@ import Axios from 'axios';
 
 // components
 import AllNews from '../components/NewsComponents/AllNews/AllNews';
-import { request } from 'https';
+import SearchQuery from '../components/NewsQueryComponents/SearchQuery/SearchQuery';
 
 export default class App extends Component {
   constructor(props) {
@@ -14,6 +14,9 @@ export default class App extends Component {
     };
 
     this.getNews = this.getNews.bind(this);
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
 
     Axios.defaults.baseURL = `http://localhost:${process.env.SERVER_PORT}`;
     // Axios.defaults.baseURL =
@@ -35,24 +38,26 @@ export default class App extends Component {
     this.setState({ value: event.target.value });
   }
 
+  handleSubmit(e) {
+    e.preventDefault();
+    console.log(this.state.value);
+    this.setState({
+      value: '',
+    });
+  }
+
   render() {
     return (
-      <div>
-        <div>
-          <form onSubmit={this.handleSubmit}>
-            <label>
-              Article:
-              <input
-                type="text"
-                value={this.state.value}
-                onChange={this.handleChange}
-              />
-            </label>
-            <input type="submit" value="Submit" />
-          </form>
-          <div>
-            <AllNews />
-          </div>
+      <div className="container">
+        <div className="row">
+          <SearchQuery
+            handleChange={this.handleChange}
+            handleSubmit={this.handleSubmit}
+            value={this.state.value}
+          />
+        </div>
+        <div className="row">
+          <AllNews value={this.state.value} />
         </div>
       </div>
     );

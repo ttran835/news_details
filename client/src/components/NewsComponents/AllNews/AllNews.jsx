@@ -7,12 +7,10 @@ import Grid from '@material-ui/core/Grid';
 
 export default function AllNews(props) {
   return (
-    <div className="container">
+    <div className="col-xs-12">
       <div className={`row justify-content-center`}>
-        <h1
-          className={`col-xs-12${styles.testThings} ${styles.materialUiShadow}`}
-        >
-          Why cant you stop stealing my msuci!
+        <h1 className={`col-xs-12${styles.testThings} ${'materialUiShadow'}`}>
+          {props.value === '' ? 'This is placeholder Text' : props.value}
         </h1>
       </div>
     </div>
