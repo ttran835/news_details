@@ -28,7 +28,9 @@ export default class App extends Component {
 
   getNews() {
     Axios.get('/home').then(res => {
+      console.log({ res });
       this.setState({
+        // news: res.data.articles,
         news: res.data.slice(0, 20),
       });
     });
@@ -40,7 +42,6 @@ export default class App extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    console.log(this.state.value);
     this.setState({
       value: '',
     });
@@ -57,7 +58,7 @@ export default class App extends Component {
           />
         </div>
         <div className="row">
-          <AllNews value={this.state.value} />
+          <AllNews news={this.state.news} value={this.state.value} />
         </div>
       </div>
     );

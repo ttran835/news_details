@@ -9,13 +9,19 @@ export default class AllNews extends Component {
   }
   render() {
     return (
-      <div className="col-xs-12">
-        <div className={`row justify-content-center`}>
+      <div className="row justify-content-center">
+        <div className="col-xs-12">
           <h1 className={`col-xs-12${styles.testThings} ${'materialUiShadow'}`}>
             {this.props.value === ''
               ? 'This is placeholder Text'
               : this.props.value}
           </h1>
+        </div>
+
+        <div className="row">
+          <div className="container">
+            <NewsRenderer news={this.props.news} />
+          </div>
         </div>
       </div>
     );

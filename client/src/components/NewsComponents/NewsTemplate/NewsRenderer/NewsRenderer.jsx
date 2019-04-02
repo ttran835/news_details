@@ -19,9 +19,20 @@ Example news data;
 */
 
 export default function NewsRenderer(props) {
+  const articles = props.news;
   return (
-    <div>
-      <h1> Hello from NewsRenderer </h1>
+    <div className="col-xs-12">
+      {articles.map(article => (
+        <div className="row">
+          <div className="col-xs-12">
+            <h3>{article.title}</h3>
+            <h4>{article.author}</h4>
+            <h5>{article.description}</h5>
+            <p>{article.pushblishedAt}</p>
+            <p>{console.log(article.content)}</p>
+          </div>
+        </div>
+      ))}
     </div>
   );
 }

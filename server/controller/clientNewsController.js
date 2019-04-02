@@ -49,7 +49,6 @@ const ClientNewsController = {
           });
           const correctedSearchQuery = spellingCheck(axiosReponseObj);
           const correctedWord = correctedSearchQuery[0].word;
-          console.log({ correctedWord });
 
           return Axios.get(
             `https://newsapi.org/v2/top-headlines?q=${correctedWord}&apiKey=${
@@ -72,6 +71,15 @@ const ClientNewsController = {
         .catch(err => console.error(err));
     } else {
       //get news from news API on initial start-up
+      // Axios.get(
+      //   `https://newsapi.org/v2/top-headlines?country=us&apiKey=${
+      //     process.env.NEWS_API
+      //   }`
+      // )
+      //   .then(datas => {
+      //     res.status(200).send(datas.data);
+      //   })
+      //   .catch(err => console.error(err));
       news
         .findAll({})
         .then(articles => {
