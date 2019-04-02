@@ -1,30 +1,5 @@
 import React, { Component } from 'react';
-import styles from './AllNews.module.scss';
-import NewsRenderer from '../NewsTemplate/NewsRenderer/NewsRenderer';
-
-export default class AllNews extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-  render() {
-    return (
-      <div className="col-xs-12">
-        <div className={`row justify-content-center`}>
-          <h1 className={`col-xs-12${styles.testThings} ${'materialUiShadow'}`}>
-            {this.props.value === ''
-              ? 'This is placeholder Text'
-              : this.props.value}
-          </h1>
-        </div>
-      </div>
-    );
-  }
-}
-
-// AllNews.PropTypes = {
-//   news: PropTypes.string,
-// };
+import styles from './NewsRenderer.module.scss';
 
 /*
 Example news data; 
@@ -42,3 +17,11 @@ Example news data;
     "updatedAt": "2019-03-04T02:29:14.966Z"
   },
 */
+
+export default function NewsRenderer(props) {
+  return (
+    <div>
+      <h1> Hello from NewsRenderer </h1>
+    </div>
+  );
+}

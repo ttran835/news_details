@@ -11,9 +11,10 @@ $second-bg: #fff;
   font-size: 1rem;
 }
 
-body {
-  background-color: $main-bg;
+#app {
   line-break: auto;
+  color: #fff;
+  height: 1000px;
 }
 
 .materialUiShadow {

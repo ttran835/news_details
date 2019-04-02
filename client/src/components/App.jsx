@@ -29,7 +29,7 @@ export default class App extends Component {
   getNews() {
     Axios.get('/home').then(res => {
       this.setState({
-        news: res.data,
+        news: res.data.slice(0, 20),
       });
     });
   }
@@ -48,7 +48,7 @@ export default class App extends Component {
 
   render() {
     return (
-      <div className="container">
+      <div className="container main">
         <div className="row">
           <SearchQuery
             handleChange={this.handleChange}
