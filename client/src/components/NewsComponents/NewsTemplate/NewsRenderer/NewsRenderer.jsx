@@ -29,7 +29,7 @@ export default function NewsRenderer(props) {
             <h4>{article.author}</h4>
             <h5>{article.description}</h5>
             <p>{article.pushblishedAt}</p>
-            <p>{console.log(article.content)}</p>
+            <p>{article.content}</p>
           </div>
         </div>
       ))}

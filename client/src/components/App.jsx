@@ -4,6 +4,7 @@ import Axios from 'axios';
 // components
 import AllNews from '../components/NewsComponents/AllNews/AllNews';
 import SearchQuery from '../components/NewsQueryComponents/SearchQuery/SearchQuery';
+import CenteredGrid from '../components/Material-Ui/GridLayouts/GridLayouts';
 
 export default class App extends Component {
   constructor(props) {
@@ -60,6 +61,7 @@ export default class App extends Component {
         <div className="row">
           <AllNews news={this.state.news} value={this.state.value} />
         </div>
+        <CenteredGrid />
       </div>
     );
   }
