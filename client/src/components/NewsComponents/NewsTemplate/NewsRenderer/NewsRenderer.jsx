@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
-import styles from './NewsRenderer.module.scss';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+import customStyles from './NewsRenderer.module.scss';
 
 /*
 Example news data; 
@@ -18,21 +22,43 @@ Example news data;
   },
 */
 
-export default function NewsRenderer(props) {
+const styles = theme => ({
+  root: {
+    flexGrow: 1,
+  },
+  paper: {
+    padding: theme.spacing.unit * 2,
+    textAlign: 'initial',
+    color: theme.palette.text.secondary,
+  },
+});
+
+const NewsRenderer = props => {
   const articles = props.news;
+  const { classes } = props;
+
   return (
-    <div className="col-xs-12">
-      {articles.map(article => (
-        <div className="row">
-          <div className="col-xs-12">
-            <h3>{article.title}</h3>
-            <h4>{article.author}</h4>
-            <h5>{article.description}</h5>
-            <p>{article.pushblishedAt}</p>
-            <p>{article.content}</p>
-          </div>
-        </div>
-      ))}
+    <div className={classes.root}>
+      <Grid container spacing={8}>
+        {articles.map(article => (
+          <Grid item xs={3}>
+            <Paper className={`${classes.paper} ${customStyles.test}`}>
+              <h3>{article.title}</h3>
+              <h4>{article.author}</h4>
+              <h5>{article.description}</h5>
+              <p>{article.pushblishedAt}</p>
+              <p>{article.content}</p>
+            </Paper>
+          </Grid>
+        ))}
+      </Grid>
     </div>
   );
-}
+};
+
+NewsRenderer.PropTypes = {
+  class: PropTypes.object.isRequired,
+  news: PropTypes.object,
+};
+
+export default withStyles(styles)(NewsRenderer);
