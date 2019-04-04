@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import Axios from 'axios';
 
-//test components
-import Link from '../components/Link/Link';
+// components
+import AllNews from '../components/NewsComponents/AllNews/AllNews';
+import SearchQuery from '../components/NewsQueryComponents/SearchQuery/SearchQuery';
+import CenteredGrid from '../components/Material-Ui/GridLayouts/GridLayouts';
 
 export default class App extends Component {
   constructor(props) {
@@ -13,57 +15,88 @@ export default class App extends Component {
     };
 
     this.getNews = this.getNews.bind(this);
+    this.newsQuery = this.newsQuery.bind(this);
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
 
-    // Axios.defaults.baseURL = `localhost:1128`;
-    //Axios.defaults.baseURL =
+    Axios.defaults.baseURL = `http://localhost:${process.env.SERVER_PORT}`;
+    // Axios.defaults.baseURL =
   }
 
   componentDidMount() {
-    // this.getNews();
+    this.getNews();
   }
 
   getNews() {
-    Axios.get('/all').then(res => {
-      console.log(res.data);
+    Axios.get('/home').then(res => {
+      console.log({ res });
       this.setState({
-        news: res.data,
+        // news: res.data.articles,
+        news: res.data.slice(0, 20),
       });
     });
+  }
+
+  newsQuery() {
+    Axios.get('/home', {
+      params: {
+        queries: this.state.value,
+      },
+    })
+      .then(res => {
+        console.log(res.data);
+        this.setState({
+          news: res.data,
+        });
+      })
+      .catch(err => console.error(err));
   }
 
   handleChange(event) {
     this.setState({ value: event.target.value });
   }
 
-  handleSubmit(event) {
-    console.log(`information submitted, ${this.state.value}`);
-    // event.preventDefault();
+  handleSubmit(e) {
+    e.preventDefault();
+    this.newsQuery();
+    this.setState({
+      value: '',
+    });
   }
 
   render() {
     return (
-      <div>
-        <div>
-          <form onSubmit={this.handleSubmit}>
-            <label>
-              Article:
-              <input
-                type="text"
-                value={this.state.value}
-                onChange={this.handleChange}
-              />
-            </label>
-            <input type="submit" value="Submit" />
-          </form>
+      <div className="container main">
+        <div className="row">
+          <SearchQuery
+            handleChange={this.handleChange}
+            handleSubmit={this.handleSubmit}
+            value={this.state.value}
+          />
         </div>
-        <div>
-          <h1>Test</h1>
-          <Link />
+        <div className="row justify-content-center">
+          <AllNews news={this.state.news} value={this.state.value} />
         </div>
+        <CenteredGrid />
       </div>
     );
   }
 }
+
+/*
+Example news data; 
+{
+    "_id": 1,
+    "source": [["id", "the-new-york-times"], ["name", "The New York Times"]],
+    "author": "DAVE PHILIPPS",
+    "title": "White Supremacism in the U.S. Military, Explained",
+    "description": "For much of the 20th century, the Ku Klux Klan actively recruited members in the armed forces without hindrance. Dozens of Navy sailors in uniform attended a Klan rally in the summer of 1923, where they were photographed holding their robes.",
+    "url": "https://www.nytimes.com/2019/02/27/us/military-white-nationalists-extremists.html",
+    "urlToImage": "https://static01.nyt.com/images/2019/02/28/us/28military-1-print/23Military-2-facebookJumbo.jpg",
+    "publishedAt": "2019-02-27T10:00:08Z",
+    "content": "Even so, the military, reflecting society as a whole, still struggled with hate groups and racist violence.\r\nExperts generally agree that the problem is more widespread than the military acknowledges.\r\nIn 1995, after the Oklahoma City bombing and the killing … [+1507 chars]",
+    "createdAt": "2019-03-04T02:29:14.966Z",
+    "updatedAt": "2019-03-04T02:29:14.966Z"
+  },
+*/

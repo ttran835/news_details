@@ -1,7 +1,39 @@
 const path = require('path');
 const webpack = require('webpack');
+const autoprefixer = require('autoprefixer');
 require('dotenv').config();
 
+const CSSModuleLoader = {
+  loader: 'css-loader',
+  options: {
+    modules: true,
+    sourceMap: true,
+    localIdentName: '-[name]-[local]-[hash:base64]',
+    // minimize: true,
+  },
+};
+
+const CSSLoader = {
+  loader: 'css-loader',
+  options: {
+    modules: false,
+    sourceMap: true,
+    // minimize: true,
+  },
+};
+
+const postCSSLoader = {
+  loader: 'postcss-loader',
+  options: {
+    ident: 'postcssrc',
+    sourceMap: true,
+    plugins: () => [
+      autoprefixer({
+        browsers: ['>1%', 'last 4 versions', 'Firefox ESR', 'not ie < 9'],
+      }),
+    ],
+  },
+};
 module.exports = {
   mode: 'development',
   entry: path.resolve(__dirname, './client/src/'),
@@ -25,35 +57,13 @@ module.exports = {
         },
       },
       {
-        test: /\.css$/,
-        use: [
-          {
-            loader: 'css-loader',
-            options: {
-              modules: true,
-              localIdentName: '[path]__[name]__[local]--[hash:base64]',
-              sourceMap: true,
-              minimize: true,
-            },
-          },
-          {
-            loader: 'postcss-loader',
-            options: {
-              sourceMap: true,
-              plugins: () => [
-                require('autoprefixer')({
-                  browsers: ['> 1%', 'last 2 versions'],
-                }),
-              ],
-            },
-          },
-          {
-            loader: 'sass-loader',
-            options: {
-              sourceMap: true,
-            },
-          },
-        ],
+        test: /\.scss$/,
+        exclude: /\.module\.scss$/,
+        use: ['style-loader', CSSLoader, postCSSLoader, 'sass-loader'],
+      },
+      {
+        test: /\.module\.scss$/,
+        use: ['style-loader', CSSModuleLoader, postCSSLoader, 'sass-loader'],
       },
       {
         test: /\.json$/,
@@ -72,11 +82,12 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx'],
   },
+
   // this is used to proxy ports
   plugins: [
     new webpack.DefinePlugin({
       'process.env.HOSTNAME': JSON.stringify(process.env.USER),
-      'process.env.PORT': JSON.stringify(process.env.SERVER_PORT),
+      'process.env.SERVER_PORT': JSON.stringify(process.env.SERVER_PORT),
     }),
   ],
 };

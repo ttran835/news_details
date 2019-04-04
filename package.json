@@ -7,9 +7,9 @@
     "webpack": "webpack",
     "react-dev": "webpack -w",
     "start": "nodemon server/server.js",
-    "scss-dev": "node-sass --watch client/src/components -o client/src/styles/css/components",
-    "scss": "node-sass client/src/components -o client/src/styles/css/components",
-    "test": "jest --verbose --passWithNoTests",
+    "scss-dev": "node-sass --watch client/src/styles -o client/dist/styles/ ",
+    "scss": "node-sass client/src/styles -o client/dist/styles/",
+    "test": "jest --verbose --passWithNoTests --detectOpenHandles",
     "seed": "node database/seed/seedFunction.js"
   },
   "repository": {
@@ -75,6 +75,7 @@
     "express": "^4.16.4",
     "json-parser": "^1.1.5",
     "morgan": "^1.9.1",
+    "npm": "^6.9.0",
     "pg": "^7.8.1",
     "prop-types": "^15.7.2",
     "react-router-dom": "^4.3.1",

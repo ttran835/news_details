@@ -1,6 +1,9 @@
 const request = require('supertest');
 const server = require('../../server/index');
+const { db } = require('../../database/index');
+const { news } = require('../../database/models/news');
 
+// client Route
 describe('GET request to /home should work properly without throwing errors', () => {
   it('should send 200 status when hitting /home', async done => {
     const response = await request(server).get('/home');
@@ -22,9 +25,9 @@ describe('GET request to /home should work properly without throwing errors', ()
 });
 
 describe('Client able to get certain articles based on search term', () => {
-  const exampleSearch1 = { searchTerm: 'Stock' };
-  const exampleSearch2 = { searchTerm: 'trump in u.s.' };
-  const exampleSearch3 = { searchTerm: 'gidfa fadsf' };
+  const exampleSearch1 = { testQuery: 'Stock' };
+  const exampleSearch2 = { testQuery: 'trump in u.s.' };
+  const exampleSearch3 = { testQuery: 'jksgjkldjg fadsf' };
 
   it('should return articles for Stock market', async done => {
     const response = await request(server)
@@ -51,17 +54,4 @@ describe('Client able to get certain articles based on search term', () => {
     );
     done();
   });
-});
-
-describe('GET request to /api/back-end should work properly without throwing errors', () => {
-  it('should send 200 status when hitting /api/back-end', async done => {
-    const response = await request(server).get('/api/back-end');
-    expect(response.status).toBe(200);
-    done();
-  });
-
-  // it('should send 201 status when hitting /api/back-end', async () => {
-  //   const response = await request(server).post('/api/back-end');
-  //   expect(response.status).toBe(201);
-  // });
 });

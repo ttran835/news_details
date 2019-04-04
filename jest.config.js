@@ -1,5 +1,3 @@
-const path = require('path');
-
 module.exports = {
   modulePaths: ['<rootDir>'],
   moduleFileExtensions: ['js', 'jsx', 'json'],
