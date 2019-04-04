@@ -21,8 +21,13 @@ Would I be able to use it redis caching?
 */
 const ClientNewsController = {
   get: (req, res) => {
-    const { searchTerm } = req.body;
-    if (searchTerm) {
+    console.log(req.body);
+    const { queries } = req.query;
+    const { testQuery } = req.body;
+    console.log({ queries });
+    console.log({ testQuery });
+    if (queries || testQuery) {
+      let searchTerm = queries || testQuery;
       const strArr = searchTerm.split(' ');
       let axiosPromises;
       axiosPromises = strArr.map(word =>

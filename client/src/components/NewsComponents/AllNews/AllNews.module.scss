@@ -8,14 +8,5 @@ h1 {
 }
 
 .testThings {
-  width: 200px;
-  height: 200px;
-}
-
-.materialUiShadow {
-  @include materialUiShadow;
-}
-
-.materialUiShadow:hover {
-  @include materialUiShadowHover;
+  margin: 20px;
 }

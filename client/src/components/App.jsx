@@ -15,6 +15,7 @@ export default class App extends Component {
     };
 
     this.getNews = this.getNews.bind(this);
+    this.newsQuery = this.newsQuery.bind(this);
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -37,12 +38,28 @@ export default class App extends Component {
     });
   }
 
+  newsQuery() {
+    Axios.get('/home', {
+      params: {
+        queries: this.state.value,
+      },
+    })
+      .then(res => {
+        console.log(res.data);
+        this.setState({
+          news: res.data,
+        });
+      })
+      .catch(err => console.error(err));
+  }
+
   handleChange(event) {
     this.setState({ value: event.target.value });
   }
 
   handleSubmit(e) {
     e.preventDefault();
+    this.newsQuery();
     this.setState({
       value: '',
     });
@@ -58,7 +75,7 @@ export default class App extends Component {
             value={this.state.value}
           />
         </div>
-        <div className="row">
+        <div className="row justify-content-center">
           <AllNews news={this.state.news} value={this.state.value} />
         </div>
         <CenteredGrid />

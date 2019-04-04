@@ -25,9 +25,9 @@ describe('GET request to /home should work properly without throwing errors', ()
 });
 
 describe('Client able to get certain articles based on search term', () => {
-  const exampleSearch1 = { searchTerm: 'Stock' };
-  const exampleSearch2 = { searchTerm: 'trump in u.s.' };
-  const exampleSearch3 = { searchTerm: 'jksgjkldjg fadsf' };
+  const exampleSearch1 = { testQuery: 'Stock' };
+  const exampleSearch2 = { testQuery: 'trump in u.s.' };
+  const exampleSearch3 = { testQuery: 'jksgjkldjg fadsf' };
 
   it('should return articles for Stock market', async done => {
     const response = await request(server)
