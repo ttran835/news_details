@@ -1,6 +1,5 @@
 //Jest and webpack are currently using differente version due to updating to correct dependencies issues
 {
-  /* Uncomment line 4 when developing and running unit tests and also comment out all plugins*/
   "presets": ["@babel/preset-env", "@babel/react"],
   "plugins": [
     "@babel/plugin-proposal-object-rest-spread",
