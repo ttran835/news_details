@@ -37,23 +37,35 @@ const NewsRenderer = props => {
   const articles = props.news;
   const { classes } = props;
 
-  return (
-    <div className={classes.root}>
-      <Grid container spacing={8}>
-        {articles.map(article => (
-          <Grid item xs={3}>
-            <Paper className={`${classes.paper} ${customStyles.test}`}>
-              <h3>{article.title}</h3>
-              <h4>{article.author}</h4>
-              <h5>{article.description}</h5>
-              <p>{article.pushblishedAt}</p>
-              <p>{article.content}</p>
-            </Paper>
-          </Grid>
-        ))}
-      </Grid>
-    </div>
-  );
+  if (Array.isArray(articles)) {
+    return (
+      <div className={classes.root}>
+        <Grid container spacing={8}>
+          {articles.map(article => (
+            <Grid item xs={3}>
+              <Paper className={`${classes.paper} ${customStyles.test}`}>
+                <h3>{article.title}</h3>
+                <h4>{article.author}</h4>
+                <h5>{article.description}</h5>
+                <p>{article.pushblishedAt}</p>
+                <p>{article.content}</p>
+              </Paper>
+            </Grid>
+          ))}
+        </Grid>
+      </div>
+    );
+  } else {
+    return (
+      <div className={classes.root}>
+        <Grid container spacing={8}>
+          <Paper className={`${classes.paper} ${customStyles.test}`}>
+            <h3>{articles}</h3>
+          </Paper>
+        </Grid>
+      </div>
+    );
+  }
 };
 
 NewsRenderer.PropTypes = {
