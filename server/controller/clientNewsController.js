@@ -21,11 +21,8 @@ Would I be able to use it redis caching?
 */
 const ClientNewsController = {
   get: (req, res) => {
-    console.log(req.body);
     const { queries } = req.query;
     const { testQuery } = req.body;
-    console.log({ queries });
-    console.log({ testQuery });
     if (queries || testQuery) {
       let searchTerm = queries || testQuery;
       const strArr = searchTerm.split(' ');
@@ -46,6 +43,7 @@ const ClientNewsController = {
               );
               axiosReponseObj[path] = data;
             } else {
+              // to handle jest integration test
               data.sort((a, b) => {
                 return b.score - a.score;
               });
@@ -55,11 +53,22 @@ const ClientNewsController = {
           const correctedSearchQuery = spellingCheck(axiosReponseObj);
           const correctedWord = correctedSearchQuery[0].word;
 
-          return Axios.get(
-            `https://newsapi.org/v2/top-headlines?q=${correctedWord}&apiKey=${
-              process.env.NEWS_API
-            }`
-          );
+          if (correctedSearchQuery === 'undefined') {
+            news
+              .findAll({})
+              .then(articles => {
+                res.status(200).send(articles);
+              })
+              .catch(err => {
+                if (err) console.error(err);
+              });
+          } else {
+            return Axios.get(
+              `https://newsapi.org/v2/top-headlines?q=${correctedWord}&apiKey=${
+                process.env.NEWS_API
+              }`
+            );
+          }
         })
         .then(datas => {
           const article = datas.data.articles;
