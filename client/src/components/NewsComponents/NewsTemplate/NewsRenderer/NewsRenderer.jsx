@@ -44,11 +44,14 @@ const NewsRenderer = props => {
           {articles.map(article => (
             <Grid item xs={3}>
               <Paper className={`${classes.paper} ${customStyles.test}`}>
-                <h3>{article.title}</h3>
-                <h4>{article.author}</h4>
-                <h5>{article.description}</h5>
-                <p>{article.pushblishedAt}</p>
+                <h2>{article.title}</h2>
+                <h3>{article.author}</h3>
+                <p>{article.description}</p>
+                <span>{article.pushblishedAt}</span>
                 <p>{article.content}</p>
+                <a className={customStyles.articleLinks} href={article.url}>
+                  To read, please visit original source.
+                </a>
               </Paper>
             </Grid>
           ))}

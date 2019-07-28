@@ -3,7 +3,6 @@ const Axios = require('Axios');
 const express = require('express');
 const { spellingCheck } = require('../../helper/spellingCheck');
 const { news } = require('../../database/models/news');
-const { wordCheck } = require('../../database/models/wordCheck');
 
 /*
 iterate through word string, then check whether or not they exit in database
